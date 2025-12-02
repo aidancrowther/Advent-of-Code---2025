@@ -8,22 +8,18 @@ fn main() {
     for range in ranges {
 
         let (lower, upper) = range.split_once("-").unwrap();
-
         let lower_bound: i64 = lower.parse().unwrap();
         let upper_bound: i64 = upper.parse().unwrap();
 
         for pattern in lower_bound..=upper_bound {
 
             let current: String = pattern.to_string();
-
             if current.len()%2 == 1 { continue; }
             
             let (front, back) = current.split_at(current.len()/2);
-
             if front == back { sum_ids += pattern; }
 
-        }
-        
+        }  
     }
     
     println!("{sum_ids}");

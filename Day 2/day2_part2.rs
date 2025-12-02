@@ -8,7 +8,6 @@ fn main() {
     for range in ranges {
 
         let (lower, upper) = range.split_once("-").unwrap();
-
         let lower_bound: i64 = lower.parse().unwrap();
         let upper_bound: i64 = upper.parse().unwrap();
 
@@ -25,7 +24,6 @@ fn main() {
                 let mut remaining: &str = &current;
 
                 for i in 1..=str_len/factor {
-
                     let ( chunk, tail) = remaining.split_at(factor);
 
                     if i == 1 { key = chunk; }
@@ -33,22 +31,15 @@ fn main() {
 
                     remaining = tail;
                     key_count += 1;
-
                 }
 
                 if key_count == str_len/factor { 
-
                     sum_ids += pattern;
                     break;
-
                 }
-
             }
-
         }
-        
     }
-    
     println!("{sum_ids}");
 
 }
