@@ -24,6 +24,7 @@ fn main() -> io::Result<()> {
 
     let width = grid[0].len();
     let height = grid.len();
+
     let window_size = 1;
 
     let mut total_of_loops = 0;
@@ -33,10 +34,10 @@ fn main() -> io::Result<()> {
         let mut roll_count = 0;
         let mut state = grid.clone();
 
-        for y in 0..width {
-            for x in 0..height {
+        for y in 0..height {
+            for x in 0..width {
 
-                if grid[x][y] == 0 { continue; }
+                if grid[y][x] == 0 { continue; }
                 
                 let mut index_val = 0;
 
@@ -45,16 +46,18 @@ fn main() -> io::Result<()> {
                 let min_y = y.saturating_sub(window_size);
                 let max_y = if y + window_size < height { y + window_size } else { height-1 };
 
+                //println!("{max_x} {min_x} {max_y} {min_y}");
+
                 for i in min_x..=max_x {
                     for j in min_y..=max_y {
                         if i == x && j == y { continue; }
-                        index_val += grid[i][j];
+                        index_val += grid[j][i];
                     }
                 }
 
                 if index_val < 4 { 
                     roll_count += 1; 
-                    state[x][y] = 0;
+                    state[y][x] = 0;
                 }
 
             }

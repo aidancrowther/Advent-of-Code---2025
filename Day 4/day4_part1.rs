@@ -27,13 +27,13 @@ fn main() -> io::Result<()> {
     let window_size = 1;
     let mut roll_count = 0;
 
-    for y in 0..width {
-        for x in 0..height {
+    for y in 0..height {
+        for x in 0..width {
 
-            if grid[x][y] == 0 { continue; }
+            if grid[y][x] == 0 { continue; }
             
             let mut index_val = 0;
-            
+
             let min_x = x.saturating_sub(window_size);
             let max_x = if x + window_size < width { x + window_size } else { width-1 };
             let min_y = y.saturating_sub(window_size);
@@ -42,7 +42,7 @@ fn main() -> io::Result<()> {
             for i in min_x..=max_x {
                 for j in min_y..=max_y {
                     if i == x && j == y { continue; }
-                    index_val += grid[i][j];
+                    index_val += grid[j][i];
                 }
             }
 
