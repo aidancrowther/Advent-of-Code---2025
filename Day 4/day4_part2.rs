@@ -46,8 +46,6 @@ fn main() -> io::Result<()> {
                 let min_y = y.saturating_sub(window_size);
                 let max_y = if y + window_size < height { y + window_size } else { height-1 };
 
-                //println!("{max_x} {min_x} {max_y} {min_y}");
-
                 for i in min_x..=max_x {
                     for j in min_y..=max_y {
                         if i == x && j == y { continue; }
