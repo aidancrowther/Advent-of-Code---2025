@@ -53,24 +53,24 @@ fn main() -> io::Result<()> {
     for line in &mut grid { line.iter_mut().for_each(|v| if *v == 0 { *v = 1; }); }
     for line in &mut grid { line.iter_mut().for_each(|v| if *v == 2 { *v = 0; }); }
 
-    let mut integral_matrix: Vec<Vec<u32>> = vec![vec![0; grid.len()+1]; grid.len()+1];
+    let mut integral_matrix: Vec<Vec<u64>> = vec![vec![0; grid.len()+1]; grid.len()+1];
 
     for y in 0..grid.len() {
-        let mut sum = 0;
+        let mut sum: u64 = 0;
         for x in 0..grid.len() {
-            sum += grid[y][x] as u32;
+            sum += grid[y][x] as u64;
             integral_matrix[y+1][x+1] = integral_matrix[y][x+1] + sum;
         }
     }
-        let mut largest: (u32, usize, usize) = (0, 0, 0);
+        let mut largest: (u64, usize, usize) = (0, 0, 0);
         for i in 0..num_points {
             for j in i+1..num_points {
                 let first = &points[i];
                 let second = &points[j];
-                
+
                 let width = cmp::max(first[0], second[0]) - cmp::min(first[0], second[0]) + 1;
                 let height = cmp::max(first[1], second[1]) - cmp::min(first[1], second[1]) + 1;
-                let area = width * height;
+                let area = width as u64 * height as u64;
 
                 if area <= largest.0 { continue; }
 
@@ -79,10 +79,10 @@ fn main() -> io::Result<()> {
                 let end_x = cmp::max(first[0], second[0]) as usize;
                 let end_y = cmp::max(first[1], second[1]) as usize;
 
-                let sum: u32 = integral_matrix[end_y + 1][end_x + 1] - 
+                let sum: u64 = integral_matrix[end_y + 1][end_x + 1] +
+                integral_matrix[start_y][start_x] -
                 integral_matrix[end_y + 1][start_x] -
-                integral_matrix[start_y][end_x + 1] +
-                integral_matrix[start_y][start_x];
+                integral_matrix[start_y][end_x + 1];
 
                 if sum == area {
                     largest.0 = area;
